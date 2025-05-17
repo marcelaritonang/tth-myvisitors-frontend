@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Soc = () => {
+const SocVisitor = () => {
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -30,23 +30,23 @@ const Soc = () => {
   };
 
   const handleBackClick = () => {
-    navigate('/upload');
+    navigate('/visitor/upload');
   };
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/background.jpg')" }}>
+      <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/backgroundregistervisitor.png')" }}>
         <div className="w-full max-w-xl bg-white p-8 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold mb-4">Berhasil Membuat Akun</h1>
           <h2 className="text-xl font-semibold mb-4">Silahkan LOGIN</h2>
-          <button onClick={() => navigate('/login')} className="bg-red-400 text-white py-2 px-4 rounded hover:bg-gray-600">Masuk / Login</button>
+          <button onClick={() => navigate('/visitor/login')} className="bg-red-400 text-white py-2 px-4 rounded hover:bg-gray-600">Masuk / Login</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/background.jpg')" }}>
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/backgroundregistervisitor.png')" }}>
       <div className="w-full max-w-xl bg-white p-8 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
           <img src="/images/tth.png" alt="Logo tth" className="h-12" />
@@ -127,11 +127,11 @@ const Soc = () => {
         </div>
         <div className="flex justify-between">
           <button onClick={handleBackClick} className="bg-gray-400 text-white py-2 px-4 rounded hover:bg-blue-700">Kembali / Back</button>
-          <button className={`bg-red-600 text-white py-2 px-4 rounded ${!isChecked1 || !isChecked2 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`} onClick={handleNextClick}>Selanjutnya / Next</button>
+          <button className={`bg-red-600 text-white py-2 px-4 rounded ${!isChecked1 || !isChecked2 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-700'}`} onClick={handleNextClick}>Daftar / Register</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Soc;
+export default SocVisitor;

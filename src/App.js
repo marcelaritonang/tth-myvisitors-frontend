@@ -1,43 +1,61 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Home from './components/Home';
-import Visitor from './components/RegisterVisitor';
-import Upload from './components/Upload';
-import Login from './components/Login';
-import Soc from './components/Soc';
-import Dashboard from './components/Dashboard';
-import CheckConfirmation from './components/CheckInConfirmation';
-import UploadLetter from './components/UploadLetter';
+
+
+import RegisterVendor from './pages/vendor/RegisterVendor';
 import LoginVendor from './components/LoginVendor';
-import RegisterVendor from './components/RegisterVendor';
-import UploadVendor from './components/UploadVendor';
+import UploadVendor from './components/Upload';
 import SocVendor from './components/SocVendor';
 import DashboardVendor from './components/DashboardVendor';
+import UploadLetter from './components/UploadLetter';
+
+import RegisterVisitor from './pages/visitor/RegisterVisitor';
+import LoginVisitor from './components/LoginVisitor';
+import UploadVisitor from './components/UploadVisitor';
+import SocVisitor from './components/SocVisitor';
+import DashboardVisitor from './components/DashboardVisitor';
+
 import Admin from './components/Admin';
+
+import CheckConfirmation from './components/CheckInConfirmation';
+
+
 import { CheckInProvider } from './contexts/CheckInContext';
+import LabProvider from './contexts/LabContext'; // Import LabProvider
 import './index.css';
 
 function App() {
   return (
     <CheckInProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/RegisterVisitor" element={<Visitor />} />
-          <Route path="/Upload" element={<Upload />} />
-          <Route path="/Soc" element={<Soc />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/check-confirmation" element={<CheckConfirmation />} />
-          <Route path="/upload-letter" element={<UploadLetter />} />
-          <Route path="/LoginVendor" element={<LoginVendor />} />
-          <Route path="/RegisterVendor" element={<RegisterVendor />} />
-          <Route path="/UploadVendor" element={<UploadVendor />} />
-          <Route path="/SocVendor" element={<SocVendor />} />
-          <Route path="/DashboardVendor" element={<DashboardVendor />} />
-          <Route path="/Admin" element={<Admin />} />
-        </Routes>
-      </Router>
+      <LabProvider>
+        <Router>
+          <Routes>
+
+            <Route path="/" element={<Home />} />
+
+            <Route path="/vendor/register" element={<RegisterVendor />} />
+            <Route path="/vendor/login" element={<LoginVendor />} />
+            <Route path="/vendor/upload" element={<UploadVendor />} />
+            <Route path="/vendor/soc" element={<SocVendor />} />
+            <Route path="/vendor/dashboard" element={<DashboardVendor />} />
+            <Route path="/vendor/upload/letter" element={<UploadLetter />} />
+
+            <Route path="/visitor/register" element={<RegisterVisitor />} />
+            <Route path="/visitor/login" element={<LoginVisitor />} />
+            <Route path="/visitor/upload" element={<UploadVisitor />} />
+            <Route path="/visitor/soc" element={<SocVisitor />} />
+            <Route path="/visitor/dashboard" element={<DashboardVisitor />} />
+
+            <Route path="/Admin" element={<Admin />} />
+            
+            <Route path="/check-confirmation" element={<CheckConfirmation />} />
+
+
+          </Routes>
+        </Router>
+      </LabProvider>
     </CheckInProvider>
   );
 }

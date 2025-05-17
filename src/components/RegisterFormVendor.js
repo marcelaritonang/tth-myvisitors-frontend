@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/RegisterVendor.module.css'; // Import modul CSS
+import styles from '../styles/RegisterVendor.module.css';
 
-function RegisterVendor() {
-  const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    company: '',
-    id_card: '',
-    password: '',
-    confirm_password: '',
-    phone: '',
-  });
+const RegisterFormVendor = ({ onNext, formData, setFormData }) => {
 
   const [error, setError] = useState('');
 
@@ -20,28 +11,28 @@ function RegisterVendor() {
   };
 
   const handleNextClick = () => {
-    const { fullname, email, company, id_card, password, confirm_password, phone } = formData;
+   const { name, email, password, confirmPassword, phoneNumber, company} = formData;
 
     // Cek jika ada field yang kosong
-    if (!fullname || !email || !company || !password || !confirm_password || !phone) {
+    if (!name || !email || !password || !confirmPassword || !phoneNumber || !company) {
       setError('Harap isi semua field sebelum melanjutkan.');
       return;
     }
 
-    // Cek jika ID Card dan Phone Number bukan angka
-    if (isNaN(id_card) || isNaN(phone)) {
-      setError('ID Card dan Nomor Telepon harus berupa angka.');
+    // Cek jika Phone Number bukan angka
+    if (!Number.isInteger(Number(phoneNumber))) {
+      setError('Nomor telepon harus berupa angka.');
       return;
     }
 
     // Cek jika password dan konfirmasi password tidak cocok
-    if (password !== confirm_password) {
+    if (password !== confirmPassword) {
       setError('Password dan Konfirmasi Password tidak cocok.');
       return;
     }
 
     setError('');
-    window.location.href = '/UploadVendor'; // Lanjut ke halaman berikutnya
+    onNext();
   };
 
   return (
@@ -54,26 +45,24 @@ function RegisterVendor() {
         <h1>Daftar Akun</h1>
         <p>Lengkapi data diri anda / Complete Your Personal Data</p>
         <form className={styles.form}>
-          <label htmlFor="fullname" className={styles.label}>Nama Lengkap (Sesuai KTP) / Full Name (According to ID Card)</label>
-          <input type="text" id="fullname" name="fullname" className={styles.input} value={formData.fullname} onChange={handleChange} />
+
+          <label htmlFor="name" className={styles.label}>Nama Lengkap (Sesuai KTP) / Full Name (According to ID Card)</label>
+          <input type="text" id="name" name="name" className={styles.input} value={formData.name} onChange={handleChange} />
 
           <label htmlFor="email" className={styles.label}>Email (Pribadi) / Email (Your Personal Mail)</label>
           <input type="email" id="email" name="email" className={styles.input} value={formData.email} onChange={handleChange} />
 
           <label htmlFor="company" className={styles.label}>Instansi Perusahaan / Instantion Company</label>
           <input type="text" id="company" name="company" className={styles.input} value={formData.company} onChange={handleChange} />
-{/* 
-          <label htmlFor="id_card" className={styles.label}>Kartu Identitas / ID Card</label>
-          <input type="number" id="id_card" name="id_card" className={styles.input} value={formData.id_card} onChange={handleChange} /> */}
 
           <label htmlFor="password" className={styles.label}>Password</label>
           <input type="password" id="password" name="password" className={styles.input} value={formData.password} onChange={handleChange} />
 
-          <label htmlFor="confirm_password" className={styles.label}>Masukan Ulang Password / Re-enter Password</label>
-          <input type="password" id="confirm_password" name="confirm_password" className={styles.input} value={formData.confirm_password} onChange={handleChange} />
+          <label htmlFor="confirmPassword" className={styles.label}>Masukan Ulang Password / Re-enter Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" className={styles.input} value={formData.confirmPassword} onChange={handleChange} />
 
-          <label htmlFor="phone" className={styles.label}>Nomor Telepon / Phone Number</label>
-          <input type="number" id="phone" name="phone" className={styles.input} value={formData.phone} onChange={handleChange} />
+          <label htmlFor="phoneNumber" className={styles.label}>Nomor Telepon / Phone Number</label>
+          <input type="number" id="phoneNumber" name="phoneNumber" className={styles.input} value={formData.phoneNumber} onChange={handleChange} />
 
           {error && <p className={styles.error}>{error}</p>}
 
@@ -82,10 +71,10 @@ function RegisterVendor() {
             <button type="button" className={`${styles.button} ${styles.next}`} onClick={handleNextClick}>Selanjutnya / Next</button>
           </div>
         </form>
-        <p className={styles.loginLink}>Sudah Punya Akun?  <Link to="../Login">Masuk</Link></p>
+        <p className={styles.loginLink}>Sudah Punya Akun?  <Link to="../vendor/login">Masuk</Link></p>
       </div>
     </div>
   );
-}
+};
 
-export default RegisterVendor;
+export default RegisterFormVendor;

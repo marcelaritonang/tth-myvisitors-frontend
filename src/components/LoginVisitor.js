@@ -5,7 +5,7 @@ import styles from '../styles/login.module.css';
 import NotificationModal from './NotificationModal';
 import axios from 'axios';
 
-function Login() {
+function LoginVisitor() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -42,7 +42,7 @@ function Login() {
     }
 
     setError('');
-    axios.post("http://localhost:5000/auth/login", {
+    axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
       email: email, 
       password: password
     })
@@ -52,7 +52,7 @@ function Login() {
       setToken(response.data.data);
       setSuccess(response.data.data);
       setShowPopup(true);
-      navigate('/dashboard');
+      navigate('/visitor/dashboard');
     })
     .catch((err) => {
       console.log(err);
@@ -61,7 +61,7 @@ function Login() {
   };
 
   const handleVisitorLogin = () => {
-    navigate('/LoginVendor');
+    navigate('/vendor/login');
   };
   
   const handleRegisterClick = (e) => {
@@ -75,11 +75,11 @@ function Login() {
 
   const handleModalAgree = () => {
     setIsModalOpen(false);
-    navigate('/RegisterVisitor');
+    navigate('/visitor/register');
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-cover bg-center" style={{ backgroundImage: "url('/images/background.jpg')", backgroundSize: '120%' }}>
+    <div className="min-h-screen flex justify-center items-center bg-cover bg-center" style={{ backgroundImage: "url('/images/backgroundregistervisitor.png')", backgroundSize: '100%' }}>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg relative">
         <div className="flex justify-between items-center mb-4">
           <img src="/images/tth.png" alt="Logo tth Indonesia" className="h-16" />
@@ -142,4 +142,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginVisitor;

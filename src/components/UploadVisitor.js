@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/UploadVendor.module.css'; // Import modul CSS
+import styles from '../styles/upload.module.css'; // Import modul CSS
 
-function UploadVendor() {
+function UploadVisitor() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeUploadType, setActiveUploadType] = useState('');
   const [selfieFileName, setSelfieFileName] = useState('');
@@ -92,7 +92,7 @@ function UploadVendor() {
 
   const handleNextClick = () => {
     if (selfieFileName) {
-      navigate('/SocVendor');
+      navigate('/visitor/soc');
     } else {
       setErrorMessage('Anda harus mengunggah semua foto sebelum melanjutkan.');
     }
@@ -125,10 +125,10 @@ function UploadVendor() {
           </button>
           {idCardFileName && <p className={styles['file-info']}>File yang diunggah: {idCardFileName}</p>}
           {idCardImage && <img src={idCardImage} alt="ID Card" className={styles['preview-image']} />}
-        </div> */}
+        </div>
 
-        {/* <div className={styles['upload-section']}>
-          <h2>Foto Kartu Identitas Perusahaan / Photo of Company Identity Card</h2>
+        <div className={styles['upload-section']}>
+          <h2>Foto Kartu Pakta Integritas / Photo of Integrity Pack</h2>
           <p>Sertakan foto selfie anda dengan memperlihatkan kartu identitas dari perusahaan anda berasal / Include your selfie photo by showing the identity card from the company you come from</p>
           <button className={styles['upload-button']} onClick={() => handleOpenModal('companyIdCard')}>
             Upload Gambar
@@ -137,8 +137,8 @@ function UploadVendor() {
           {companyIdCardImage && <img src={companyIdCardImage} alt="Company ID Card" className={styles['preview-image']} />}
         </div> */}
 
-        <div className={styles.buttons}>
-          <button onClick={() => navigate('/RegisterVendor')} className={styles.back}>Kembali / Back</button>
+        <div className={styles.buttons}>  
+          <button onClick={() => navigate('/RegisterVisitor')} className={styles.back}>Kembali / Back</button>
           <button onClick={handleNextClick} className={styles.next}>Selanjutnya / Next</button>
         </div>
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
@@ -177,4 +177,4 @@ function UploadVendor() {
   );
 }
 
-export default UploadVendor;
+export default UploadVisitor;

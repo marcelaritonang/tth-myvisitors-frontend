@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/upload.module.css'; // Import modul CSS
+import styles from '../styles/UploadVendor.module.css';
 
-function Upload() {
+const Upload = ({ onNext, onBack, formData, setFormData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeUploadType, setActiveUploadType] = useState('');
   const [selfieFileName, setSelfieFileName] = useState('');
@@ -43,6 +43,7 @@ function Upload() {
       if (activeUploadType === 'selfie') {
         setSelfieFileName(file.name);
         setSelfieImage(fileURL);
+        setFormData({ ...formData, selfiePhoto: file });
       } else if (activeUploadType === 'idCard') {
         setIdCardFileName(file.name);
         setIdCardImage(fileURL);
@@ -73,10 +74,12 @@ function Upload() {
       const context = canvasRef.current.getContext('2d');
       context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
       canvasRef.current.toBlob((blob) => {
+        const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
         const fileURL = URL.createObjectURL(blob);
         if (activeUploadType === 'selfie') {
           setSelfieFileName('selfie.png');
           setSelfieImage(fileURL);
+          setFormData({ ...formData, selfiePhoto: file });
         } else if (activeUploadType === 'idCard') {
           setIdCardFileName('idCard.png');
           setIdCardImage(fileURL);
@@ -85,17 +88,21 @@ function Upload() {
           setCompanyIdCardImage(fileURL);
         }
         console.log('Foto yang diambil:', fileURL);
-      });
+      }, 'image/jpeg');
       handleCloseModal();
     }
   };
 
   const handleNextClick = () => {
     if (selfieFileName) {
-      navigate('/Soc');
+      onNext();
     } else {
       setErrorMessage('Anda harus mengunggah semua foto sebelum melanjutkan.');
     }
+  };
+
+  const handleBackClick = () => {
+    onBack();
   };
 
   return (
@@ -125,10 +132,10 @@ function Upload() {
           </button>
           {idCardFileName && <p className={styles['file-info']}>File yang diunggah: {idCardFileName}</p>}
           {idCardImage && <img src={idCardImage} alt="ID Card" className={styles['preview-image']} />}
-        </div>
+        </div> */}
 
-        <div className={styles['upload-section']}>
-          <h2>Foto Kartu Pakta Integritas / Photo of Integrity Pack</h2>
+        {/* <div className={styles['upload-section']}>
+          <h2>Foto Kartu Identitas Perusahaan / Photo of Company Identity Card</h2>
           <p>Sertakan foto selfie anda dengan memperlihatkan kartu identitas dari perusahaan anda berasal / Include your selfie photo by showing the identity card from the company you come from</p>
           <button className={styles['upload-button']} onClick={() => handleOpenModal('companyIdCard')}>
             Upload Gambar
@@ -137,8 +144,8 @@ function Upload() {
           {companyIdCardImage && <img src={companyIdCardImage} alt="Company ID Card" className={styles['preview-image']} />}
         </div> */}
 
-        <div className={styles.buttons}>  
-          <button onClick={() => navigate('/RegisterVisitor')} className={styles.back}>Kembali / Back</button>
+        <div className={styles.buttons}>
+          <button onClick={handleBackClick} className={styles.back}>Kembali / Back</button>
           <button onClick={handleNextClick} className={styles.next}>Selanjutnya / Next</button>
         </div>
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
